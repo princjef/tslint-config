@@ -18,7 +18,7 @@ jobs:
         displayName: Use Node.js 10
       - script: npm ci
         displayName: Install Dependencies
-      - script: ./node_modules/.bin/commitlint-azure-pipelines
+      - script: commitlint-azure-pipelines
         displayName: Lint Commits
 
   - job: test
