@@ -1,0 +1,55 @@
+variables:
+  - group: semantic-release
+
+trigger:
+  - master
+
+pr:
+  - master
+
+jobs:
+  - job: commitlint
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: 10.x
+        displayName: Use Node.js 10
+      - script: npm ci
+        displayName: Install Dependencies
+      - script: ./node_modules/.bin/commitlint-azure-pipelines
+        displayName: Lint Commits
+
+  - job: test
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: 10.x
+        displayName: Use Node.js 10
+      - script: npm ci
+        displayName: Install Dependencies
+      - script: npm test
+        displayName: Check Format
+
+  - job: publish
+    dependsOn:
+      - commitlint
+      - test
+    pool:
+      vmImage: 'ubuntu-16.04'
+    condition: and(succeeded(), in(variables['Build.Reason'], 'Manual', 'IndividualCI', 'BatchedCI'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: 10.x
+        displayName: Use Node.js 10
+      - script: npm ci
+        displayName: Install Dependencies
+      - script: npm run release
+        env:
+          GH_TOKEN: $(GH_TOKEN)
+          NPM_TOKEN: $(NPM_TOKEN)
+        displayName: Publish to NPM
