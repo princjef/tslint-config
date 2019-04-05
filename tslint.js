@@ -4,18 +4,80 @@ module.exports = {
   rules: {
     // Turn off/tweak airbnb rules
     'import-name': false,
-    'function-name': [
+    'function-name': false,
+    'variable-name': false,
+    'object-shorthand-properties-first': false,
+    'naming-convention': [
       true,
+      // Start from simple camelCase and add exceptions as we go
       {
-        'function-regex': /^\$?[a-z][\w\d]+$/,
-        'method-regex': /^\$?[a-z][\w\d]+$/,
-        'private-method-regex': /^[_$]?[a-z][\w\d]+$/,
-        'protected-method-regex': /^\$?[a-z][\w\d]+$/,
-        'static-method-regex': /^\$?[a-z][\w\d]+$/
+        type: 'default',
+        format: 'camelCase',
+        leadingUnderscore: 'forbid',
+        trailingUnderscore: 'forbid'
+      },
+      // Allow either camel case or capital case for module variables
+      {
+        type: 'variable',
+        modifiers: ['global', 'const'],
+        format: ['camelCase', 'UPPER_CASE']
+      },
+      // If the variable is in a destructure and is not used, it may start with
+      // an underscore to satisfy the no unused tslint rule
+      {
+        type: 'variable',
+        modifiers: ['rename', 'unused'],
+        leadingUnderscore: 'allow'
+      },
+      // If the exported variable is a function, use camel case
+      {
+        type: 'functionVariable',
+        modifiers: ['export', 'const'],
+        format: 'camelCase'
+      },
+      // Same goes for normal functions
+      {
+        type: 'function',
+        modifiers: ['export', 'const'],
+        format: 'camelCase'
+      },
+      // Unused parameters can have a leading underscore to play nice with
+      // Typescript's noUnusedParameters when present.
+      {
+        type: 'parameter',
+        modifiers: 'unused',
+        leadingUnderscore: 'allow'
+      },
+      // Private methods/fields have to start with an underscore
+      {
+        type: 'member',
+        modifiers: 'private',
+        leadingUnderscore: 'require'
+      },
+      // Static property members may use capital case
+      {
+        type: 'property',
+        modifiers: 'static',
+        format: ['camelCase', 'UPPER_CASE']
+      },
+      // Private static property members may have an underscore (if they
+      // are camel case)
+      {
+        type: 'property',
+        modifiers: 'static',
+        leadingUnderscore: 'allow'
+      },
+      // Classes, interfaces, type aliases, etc. have to be capitalized
+      {
+        type: 'type',
+        format: 'PascalCase'
+      },
+      // Enum members have to be capitalized
+      {
+        type: 'enumMember',
+        format: 'PascalCase'
       }
     ],
-    'variable-name': [true, 'check-format', 'allow-leading-underscore'],
-    'object-shorthand-properties-first': false,
 
     // Additional rules
     'adjacent-overload-signatures': true,
