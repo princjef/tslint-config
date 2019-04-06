@@ -1,6 +1,6 @@
 {
   "name": "@princjef/tslint-config",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "TSLint configuration for Typescript packages.",
   "main": "tslint.js",
   "keywords": [
