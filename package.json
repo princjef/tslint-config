@@ -43,11 +43,11 @@
     "@semantic-release/changelog": "^3.0.6",
     "@semantic-release/git": "^7.0.18",
     "@semantic-release/github": "^5.5.5",
-    "@semantic-release/npm": "^5.3.4",
+    "@semantic-release/npm": "^9.0.1",
     "commitlint-azure-pipelines-cli": "^1.0.3",
     "husky": "^3.1.0",
     "prettier": "^1.19.1",
-    "semantic-release": "^15.14.0",
+    "semantic-release": "^19.0.5",
     "tslint": "^5.20.1"
   },
   "files": [
