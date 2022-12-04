@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/princjef/tslint-config/compare/v2.0.1...v2.0.2) (2022-12-04)
+
+
+### Bug Fixes
+
+* **deps:** allow all tslint >=5 ([863af4c](https://github.com/princjef/tslint-config/commit/863af4c3cefb035f8c73585d276f208fc978b4d4))
+
 ## [2.0.1](https://github.com/princjef/tslint-config/compare/v2.0.0...v2.0.1) (2019-12-24)
 
 
